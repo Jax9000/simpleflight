@@ -1,8 +1,9 @@
 #include <iostream>
-#include <fstream>
 
 #include "GL\glew.h"
 #include "GLFW\glfw3.h"
+
+#include "shader.h"
 
 GLFWwindow* WindowInit()
 {
@@ -48,75 +49,6 @@ GLint Terminate(GLchar* message)
 	return -1;
 }
 
-GLuint CompileShader(GLenum shaderType, const GLchar* shaderSource, GLchar* shaderName)
-{
-	GLuint shader;
-	shader = glCreateShader(shaderType);
-	glShaderSource(shader, 1, &shaderSource, NULL);
-	glCompileShader(shader);
-
-	GLint success;
-	GLchar infoLog[512];
-	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(shader, 512, NULL, infoLog);
-		std::cout << "ERROR::SHADER::" << shaderName << "::COMPILATION_FAILED\n" << infoLog << std::endl;
-	}
-
-	return shader;
-}
-
-GLuint CreateProgram(GLuint vertexShader, GLuint fragmentShader)
-{
-	GLuint shaderProgram;
-	shaderProgram = glCreateProgram();
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	GLint success;
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success)
-	{
-		GLchar infoLog[512];
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cout << "ERROR::LINK\n" << infoLog << std::endl;
-	}
-
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-
-	return shaderProgram;
-}
-
-const GLchar* vertexShaderSource =
-"#version 330 core\n"
-"layout (location = 0) in vec3 position;\n"
-"layout (location = 1) in vec3 color;\n"
-"out vec4 vertexColor;\n"
-"void main()\n"
-"{\n"
-"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
-"vertexColor = vec4(color, 1.0f); \n"
-"}\0";
-
-const GLchar* fragmentShaderSource0 =
-"#version 330 core\n"
-"in vec4 vertexColor;\n"
-"out vec4 color;\n"
-"void main()\n"
-"{\n"
-"	color = vertexColor;\n"
-"}\0";
-
-const GLchar* fragmentShaderSource1 =
-"#version 330 core\n"
-"out vec4 color;\n"
-"void main()\n"
-"{\n"
-"	color = vec4(0.0f, 1f, 0.2f, 1.0f);\n"
-"}\0";
 
 int main()
 {
@@ -127,11 +59,7 @@ int main()
 	if (GlewInit() != 0)
 		return Terminate("Failed to init glew");
 
-	GLuint vertexShader = CompileShader(GL_VERTEX_SHADER, vertexShaderSource, "VERTEX");
-	GLuint fragmentShader0 = CompileShader(GL_FRAGMENT_SHADER, fragmentShaderSource0, "FRAGMENT0");
-	GLuint fragmentShader1 = CompileShader(GL_FRAGMENT_SHADER, fragmentShaderSource1, "FRAGMENT1");
-	GLuint shaderProgram0 = CreateProgram(vertexShader, fragmentShader0);
-	GLuint shaderProgram1 = CreateProgram(vertexShader, fragmentShader1);
+	Shader* shader = new Shader("./shader.vs", "./shader.frag");
 
 	glfwSetKeyCallback(window, KeyEvent);
 
@@ -191,7 +119,7 @@ int main()
 
 		glBindVertexArray(VAO);
 
-			glUseProgram(shaderProgram0);
+			shader->Use();
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glBindVertexArray(0);
