@@ -2,8 +2,10 @@
 
 #include "GL\glew.h"
 #include "GLFW\glfw3.h"
+#include "SOIL\soil.h"
 
 #include "shader.h"
+#include "texture2D.h"
 
 GLFWwindow* WindowInit()
 {
@@ -60,21 +62,26 @@ int main()
 		return Terminate("Failed to init glew");
 
 	Shader* shader = new Shader("./shader.vs", "./shader.frag");
+	
 
 	glfwSetKeyCallback(window, KeyEvent);
 
 	GLfloat vertices[] = {
-		0.50f, 0.50f, 0.0f,
-		1.0f, 0.0f, 0.0f,
-		
-		-0.50f, -0.50f, 0.0f,
+		1.0f, 1.0f, 0.0f, //position
+		1.0f, 0.0f, 0.0f,   //color
+	    4.0f, 4.0f,		//texture
+
+		-1.0f, -1.0f, 0.0f,
 		0.0f, 0.0f, 1.0f,
-		
-		0.50f, -0.50f, 0.0f,
+		0.0f, 0.0f,
+
+		1.0f, -1.0f, 0.0f,
 		1.0f, 1.0f, 0.0f,
+		2.0f, 0.0f,
 		
-		-0.50f, 0.50f, 0.0f,
+		-1.0f, 1.0f, 0.0f,
 		0.0f, 1.0f, 0.0f,
+		0.0f, 4.0f
 	};
 
 	GLuint indices[] = {  // Note that we start from 0!
@@ -97,16 +104,20 @@ int main()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 		
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
 		glEnableVertexAttribArray(0);
 
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3* sizeof(GLfloat)));
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(1);
+
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
+		glEnableVertexAttribArray(2);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
 	
-
+	Texture2D* wallTexture = new Texture2D("./Resources/Textures/wall.jpg");
+	Texture2D* woodTexture = new Texture2D("./Resources/Textures/fifi.jpg");
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -114,8 +125,16 @@ int main()
 		glfwPollEvents();
 
 		//rendering
-		glClearColor(1, 0.85f, 0.3f, 0.8f);
+		glClearColor(0.047f, 0.707f, 0.929f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		glActiveTexture(GL_TEXTURE0);
+		wallTexture->Use();
+		glUniform1i(glGetUniformLocation(shader->Program, "ourTexture0"), 0);
+		
+		glActiveTexture(GL_TEXTURE1);
+		woodTexture->Use();
+		glUniform1i(glGetUniformLocation(shader->Program, "ourTexture1"), 1);
 
 		glBindVertexArray(VAO);
 
@@ -123,6 +142,7 @@ int main()
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glBindVertexArray(0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		glfwSwapBuffers(window);
 	}
