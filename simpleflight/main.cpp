@@ -11,9 +11,10 @@
 #include "shader.h"
 #include "texture2D.h"
 #include "camera.cpp"
+#include "Model.h"
 
-#define WIDTH 800
-#define HEIGHT 600
+#define WIDTH 1400
+#define HEIGHT 800
 
 //glm::mat4 model, view, projection;
 GLFWwindow* window;
@@ -59,7 +60,7 @@ GLint GlewInit()
 	if (glewInit() != GLEW_OK)
 		return -1;
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, WIDTH, HEIGHT);
 	return 0;
 }
 
@@ -315,6 +316,9 @@ int main()
 	GLint viewLocation = glGetUniformLocation(shader->Program, "view");
 	GLint modelLocation = glGetUniformLocation(shader->Program, "model");
 
+	Model nanosuit("./Resources/Models/nanosuit/nanosuit.obj");
+	Shader modelShader("./model.vs", "./model.frag");
+
 	while (!glfwWindowShouldClose(window))
 	{
 		// Set frame time
@@ -369,6 +373,7 @@ int main()
 		glBindVertexArray(0);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
+		nanosuit.Draw(modelShader);
 		glfwSwapBuffers(window);
 
 	}

@@ -72,15 +72,23 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="texture2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="shader.vs" />
+    <Text Include="model.frag" />
+    <Text Include="model.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="texture2D.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.frag" />
