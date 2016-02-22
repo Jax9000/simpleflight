@@ -12,6 +12,7 @@
 #include "texture2D.h"
 #include "camera.cpp"
 #include "Model.h"
+#include "WindowController.h"
 
 #define WIDTH 1400
 #define HEIGHT 800
@@ -137,185 +138,14 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 int main()
 {
-	window = WindowInit();
-	if (window == nullptr)
+	WindowController* windowController = &WindowController::GetInstance();
+	if (windowController == nullptr)
 		return Terminate("Failed to create window...");
 
-	glfwSetKeyCallback(window, key_callback);
-	glfwSetCursorPosCallback(window, mouse_callback);
-	glfwSetScrollCallback(window, scroll_callback);
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//glEnable(GL_DEPTH_TEST);
 
-	glEnable(GL_DEPTH_TEST);
-
-	if (GlewInit() != 0)
-		return Terminate("Failed to init glew");
-#pragma region garbage
-	//Shader* shader = new Shader("./shader.vs", "./shader.frag");
-
-	//GLfloat vertices[] = {
-	//	0.50f, 0.50f, 0.5f, //position
-	//	1.0f, 0.0f, 0.0f,   //color
-	//    1.0f, 1.0f,		//texture 
-	//	
-	//	-0.50f, -0.50f, 0.5f,
-	//	0.0f, 0.0f, 1.0f,
-	//	0.0f, 0.0f,
-
-	//	0.50f, -0.50f, 0.5f,
-	//	1.0f, 1.0f, 0.0f,
-	//	1.0f, 0.0f,
-	//	
-	//	-0.50f, 0.50f, 0.5f,
-	//	0.0f, 1.0f, 0.0f,
-	//	0.0f, 1.0f,
-	//	/////////back///////////
-	//	0.50f, 0.50f, -0.5f, //position
-	//	1.0f, 0.0f, 0.0f,   //color
-	//	1.0f, 1.0f,		//texture 
-
-	//	-0.50f, -0.50f, -0.5f,
-	//	0.0f, 0.0f, 1.0f,
-	//	0.0f, 0.0f,
-
-	//	0.50f, -0.50f, -0.5f,
-	//	1.0f, 1.0f, 0.0f,
-	//	1.0f, 0.0f,
-
-	//	-0.50f, 0.50f, -0.5f,
-	//	0.0f, 1.0f, 0.0f,
-	//	0.0f, 1.0f,
-	//	/////////left////////////
-	//	-0.50f, 0.50f, -0.5f, //position
-	//	1.0f, 0.0f, 0.0f,   //color
-	//	0.0f, 1.0f,		//texture 
-
-	//	-0.50f, -0.50f, 0.5f,
-	//	0.0f, 0.0f, 1.0f,
-	//	1.0f, 0.0f,
-
-	//	-0.50f, 0.50f, 0.5f,
-	//	1.0f, 1.0f, 0.0f,
-	//	1.0f, 1.0f,
-
-	//	-0.50f, -0.50f, -0.5f,
-	//	0.0f, 1.0f, 0.0f,
-	//	0.0f, 0.0f,
-	//	/////////right////////////
-	//	0.50f, -0.50f, -0.5f, //position
-	//	1.0f, 0.0f, 0.0f,   //color
-	//	1.0f, 0.0f,		//texture 
-
-	//	0.50f, 0.50f, 0.5f,
-	//	0.0f, 0.0f, 1.0f,
-	//	0.0f, 1.0f,
-
-	//	0.50f, -0.50f, 0.5f,
-	//	1.0f, 1.0f, 0.0f,
-	//	0.0f, 0.0f,
-
-	//	0.50f, 0.50f, -0.5f,
-	//	0.0f, 1.0f, 0.0f,
-	//	1.0f, 1.0f,
-	//	/////////top////////////
-	//	0.50f, 0.50f, 0.5f, //position
-	//	1.0f, 0.0f, 0.0f,   //color
-	//	0.0f, 1.0f,		//texture 
-
-	//	-0.50f, 0.50f, -0.5f,
-	//	0.0f, 0.0f, 1.0f,
-	//	1.0f, 0.0f,
-
-	//	-0.50f, 0.50f, 0.5f,
-	//	1.0f, 1.0f, 0.0f,
-	//	1.0f, 1.0f,
-
-	//	0.50f, 0.50f, -0.5f,
-	//	0.0f, 1.0f, 0.0f,
-	//	0.0f, 0.0f,
-	//	/////////bottom////////////
-	//	-0.50f, -0.50f, 0.5f, //position
-	//	1.0f, 0.0f, 0.0f,   //color
-	//	0.0f, 1.0f,		//texture 
-
-	//	0.50f, -0.50f, -0.5f,
-	//	0.0f, 0.0f, 1.0f,
-	//	1.0f, 0.0f,
-
-	//	0.50f,- 0.50f, 0.5f,
-	//	1.0f, 1.0f, 0.0f,
-	//	1.0f, 1.0f,
-
-	//	-0.50f, -0.50f, -0.5f,
-	//	0.0f, 1.0f, 0.0f,
-	//	0.0f, 0.0f
-	//};
-
-	//GLuint indices[] = {  // Note that we start from 0!
-	//	0, 1, 2,   // First Triangle
-	//	0, 1, 3,    // Second Triangle
-	//	4, 5, 6,
-	//	4, 5, 7,
-	//	8, 9, 10,
-	//	8, 9, 11,
-	//	12, 13, 14,
-	//	12, 13, 15,
-	//	16, 17, 18,
-	//	16, 17, 19,
-	//	20, 21, 22,
-	//	20, 21, 23
-	//};
-
-	//glm::vec3 cubePositions[] = {
-	//	glm::vec3(0.0f,  0.0f,  0.0f),
-	//	glm::vec3(0.50f,  0.0f, 1.0f),
-	//	glm::vec3(-1.5f, -2.2f, -2.5f),
-	//	glm::vec3(-3.8f, -2.0f, -12.3f),
-	//	glm::vec3(2.4f, -0.4f, -3.5f),
-	//	glm::vec3(-1.7f,  3.0f, -7.5f),
-	//	glm::vec3(1.3f, -2.0f, -2.5f),
-	//	glm::vec3(1.5f,  2.0f, -2.5f),
-	//	glm::vec3(1.5f,  0.2f, -1.5f),
-	//	glm::vec3(-1.3f,  1.0f, -1.5f)
-	//};
-	//
-	//GLuint VBO;
-	//glGenBuffers(1, &VBO);
-	//GLuint VAO;
-	//glGenVertexArrays(1, &VAO);
-	//GLuint EBO;
-	//glGenBuffers(1, &EBO);
-	//
-	//glBindVertexArray(VAO);
-	//	
-	//	glBindBuffer(GL_ARRAY_BUFFER, VBO);				
-	//	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	//	
-	//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-	//	
-	//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)0);
-	//	glEnableVertexAttribArray(0);
-
-	//	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-	//	glEnableVertexAttribArray(1);
-
-	//	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(6 * sizeof(GLfloat)));
-	//	glEnableVertexAttribArray(2);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-	//glBindVertexArray(0);
-	//
-	//Texture2D* wallTexture = new Texture2D("./Resources/Textures/wall.jpg");
-	//Texture2D* woodTexture = new Texture2D("./Resources/Textures/lmao.jpg");
-
-	///*projection = glm::perspective(45.0f, (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
-	//model = glm::rotate(model, 0.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	//view = glm::translate(view, glm::vec3(0, 0, -3.0f));*/
-	//
-	//GLint projectionLocation = glGetUniformLocation(shader->Program, "projection");
-	//GLint viewLocation = glGetUniformLocation(shader->Program, "view");
-	//GLint modelLocation = glGetUniformLocation(shader->Program, "model");
+	//if (GlewInit() != 0)
+	//	return Terminate("Failed to init glew");
 
 	//Model nanosuit("./Resources/Models/nanosuit/nanosuit.obj");
 	//Shader modelShader("./model.vs", "./model.frag");
@@ -327,89 +157,32 @@ int main()
 	//	deltaTime = currentFrame - lastFrame;
 	//	lastFrame = currentFrame;
 
-	//	// Create camera transformation
-	//	glm::mat4 view;
-	//	view = camera.GetViewMatrix();
-	//	glm::mat4 projection;
-	//	projection = glm::perspective(camera.Zoom, (float)WIDTH / (float)HEIGHT, 0.1f, 1000.0f);
-	//	
-	//	glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(projection));
-	//	glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
-	//	//glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
-
 	//	// Check and call events
 	//	glfwPollEvents();
 	//	Do_Movement();
 
-	//	//rendering
+	//	// Clear the colorbuffer
 	//	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 	//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//	glActiveTexture(GL_TEXTURE0);
-	//	wallTexture->Use();
-	//	glUniform1i(glGetUniformLocation(shader->Program, "ourTexture0"), 0);
-	//	
-	//	glActiveTexture(GL_TEXTURE1);
-	//	woodTexture->Use();
-	//	glUniform1i(glGetUniformLocation(shader->Program, "ourTexture1"), 1);
+	//	modelShader.Use();   // <-- Don't forget this one!
+	//					// Transformation matrices
+	//	glm::mat4 projection = glm::perspective(camera.Zoom, (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
+	//	glm::mat4 view = camera.GetViewMatrix();
+	//	glUniformMatrix4fv(glGetUniformLocation(modelShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	//	glUniformMatrix4fv(glGetUniformLocation(modelShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
+	//	// Draw the loaded model
+	//	glm::mat4 model;
+	//	model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // Translate it down a bit so it's at the center of the scene
+	//	model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// It's a bit too big for our scene, so scale it down
+	//	glUniformMatrix4fv(glGetUniformLocation(modelShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+	//	nanosuit.Draw(modelShader);
 
-	//	shader->Use();
-	//	
-	//	glBindVertexArray(VAO);
-	//	for (GLuint i = 0; i < 10; i++)
-	//	{
-	//		glm::mat4 model;
-	//		model = glm::translate(model, cubePositions[i]);
-	//		GLfloat angle = 20.0f * i;
-	//		if (i % 3 == 0)  // Every 3rd iteration (including the first) we set the angle using GLFW's time function.
-	//			angle = glfwGetTime() * 25.0f;
-
-	//		model = glm::rotate(model, angle, glm::vec3(1.0f, 0.3f, 0.5f));
-	//		glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
-
-	//		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-	//		//glDrawArrays(GL_TRIANGLES, 0, 36);
-	//	}
-	//	glBindVertexArray(0);
-	//	glBindTexture(GL_TEXTURE_2D, 0);
-#pragma endregion
-	Model nanosuit("./Resources/Models/nanosuit/nanosuit.obj");
-	Shader modelShader("./model.vs", "./model.frag");
-
-	while (!glfwWindowShouldClose(window))
-	{
-		// Set frame time
-		GLfloat currentFrame = glfwGetTime();
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
-
-		// Check and call events
-		glfwPollEvents();
-		Do_Movement();
-
-		// Clear the colorbuffer
-		glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		modelShader.Use();   // <-- Don't forget this one!
-						// Transformation matrices
-		glm::mat4 projection = glm::perspective(camera.Zoom, (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
-		glm::mat4 view = camera.GetViewMatrix();
-		glUniformMatrix4fv(glGetUniformLocation(modelShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(glGetUniformLocation(modelShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
-
-		// Draw the loaded model
-		glm::mat4 model;
-		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // Translate it down a bit so it's at the center of the scene
-		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// It's a bit too big for our scene, so scale it down
-		glUniformMatrix4fv(glGetUniformLocation(modelShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		nanosuit.Draw(modelShader);
-
-		// Swap the buffers
-		glfwSwapBuffers(window);
-	}
-
+	//	// Swap the buffers
+	//	glfwSwapBuffers(window);
+	//}
+	system("pause");
 	glfwTerminate();
 	return 0;
 }
