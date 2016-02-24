@@ -3,5 +3,5 @@
 class IMouseListener
 {
 public:
-	virtual void OnMouseMoved(int xpos, int ypos);
+	virtual void OnMouseMoved(double xoffset, double yoffset);
 };

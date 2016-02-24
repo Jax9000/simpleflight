@@ -16,6 +16,23 @@ WindowController& WindowController::GetInstance()
 	return instance;
 }
 
+void WindowController::Draw(Scene scene)
+{
+	while (!glfwWindowShouldClose(glfw_window))
+	{
+		glfwPollEvents();
+
+		// Clear the colorbuffer
+		glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		scene.Draw();
+
+		// next frame
+		glfwSwapBuffers(glfw_window);
+	}
+}
+
 void WindowController::init()
 {
 	glfwInit();

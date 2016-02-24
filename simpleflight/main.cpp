@@ -141,6 +141,12 @@ int main()
 	WindowController* windowController = &WindowController::GetInstance();
 	if (windowController == nullptr)
 		return Terminate("Failed to create window...");
+	windowController->setHeight(800);
+	windowController->setWidth(1200);
+
+	Scene scene;
+	
+	windowController->Draw(scene);
 
 	//glEnable(GL_DEPTH_TEST);
 

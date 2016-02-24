@@ -72,9 +72,13 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="EventController.cpp" />
+    <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="IKeyListener.cpp" />
+    <ClCompile Include="IMouseListener.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="texture2D.cpp" />
     <ClCompile Include="WindowController.cpp" />
@@ -86,10 +90,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EventController.h" />
+    <ClInclude Include="GameController.h" />
     <ClInclude Include="IKeyListener.h" />
     <ClInclude Include="IMouseListener.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="texture2D.h" />
     <ClInclude Include="shader.h" />

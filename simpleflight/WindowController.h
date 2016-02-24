@@ -1,5 +1,6 @@
 #include "GLFW\glfw3.h"
 #include "EventController.h"
+#include "Scene.h"
 
 class WindowController
 {
@@ -7,6 +8,7 @@ class WindowController
 	WindowController();
 	~WindowController();
 	static WindowController& GetInstance();
+	void Draw(Scene scene);
 
 	int getWidht() { return width; }
 	void setWidth(int value);
