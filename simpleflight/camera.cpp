@@ -3,7 +3,7 @@
 // Constructor with vectors
 Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM)
 {
-	//EventController::AddMouseListener(this);
+	EventController::AddMouseListener(this);
 	this->Position = position;
 	this->WorldUp = up;
 	this->Yaw = yaw;
@@ -87,4 +87,9 @@ void Camera::updateCameraVectors()
 	// Also re-calculate the Right and Up vector
 	this->Right = glm::normalize(glm::cross(this->Front, this->WorldUp));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
 	this->Up = glm::normalize(glm::cross(this->Right, this->Front));
+}
+
+void Camera::OnMouseMoved(double xoffset, double yoffset)
+{
+	ProcessMouseMovement(xoffset, yoffset);
 }

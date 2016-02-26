@@ -8,7 +8,6 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "assimp/cimport.h"
 
-#include "EventController.h"
 #include "Scene.h"
 
 using namespace std;

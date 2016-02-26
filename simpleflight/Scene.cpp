@@ -4,7 +4,7 @@
 
 Scene::Scene()
 {
-	camera = Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+	camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 }
 
 
@@ -14,8 +14,8 @@ Scene::~Scene()
 
 void Scene::Draw(int width, int height)
 {
-	glm::mat4 projection = glm::perspective(camera.Zoom, (float)width / (float)height, 0.1f, 100.0f);
-	glm::mat4 view = camera.GetViewMatrix();
+	glm::mat4 projection = glm::perspective(camera->Zoom, (float)width / (float)height, 0.1f, 100.0f);
+	glm::mat4 view = camera->GetViewMatrix();
 
 	for (GameObject* object : game_objects)
 	{

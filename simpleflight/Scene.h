@@ -20,6 +20,6 @@ public:
 
 private:
 	std::vector<GameObject*> game_objects;
-	Camera camera;
+	Camera* camera;
 };
 

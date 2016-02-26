@@ -6,8 +6,8 @@
 #include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "IMouseListener.h"
-//#include "EventController.h"
+//#include "IMouseListener.h"
+#include "EventController.h"
 
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum Camera_Movement {
@@ -24,7 +24,7 @@ const GLfloat SPEED = 3.0f;
 const GLfloat SENSITIVTY = 0.1f;
 const GLfloat ZOOM = 45.0f;
 
-class Camera
+class Camera : IMouseListener
 {
 public:
 	Camera(
@@ -46,7 +46,7 @@ public:
 	void ProcessKeyboard(Camera_Movement direction, GLfloat deltaTime);
 	void ProcessMouseMovement(GLfloat xoffset, GLfloat yoffset, GLboolean constrainPitch = true);
 	void ProcessMouseScroll(GLfloat yoffset);
-	//virtual void OnMouseMoved(double xoffset, double yoffset) override;
+	virtual void OnMouseMoved(double xoffset, double yoffset) override;
 
 	// Camera Attributes
 	glm::vec3 Position;
