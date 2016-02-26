@@ -11,7 +11,7 @@ class Model
 {
 public:
 	/*  Functions   */
-	Model(GLchar* path);
+	Model(string path);
 	void Draw(Shader shader);
 private:
 	/*  Model Data  */

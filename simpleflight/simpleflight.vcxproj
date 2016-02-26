@@ -73,6 +73,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="EventController.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="IKeyListener.cpp" />
     <ClCompile Include="IMouseListener.cpp" />
     <ClCompile Include="main.cpp" />
@@ -91,6 +92,7 @@
   <ItemGroup>
     <ClInclude Include="EventController.h" />
     <ClInclude Include="GameController.h" />
+    <ClInclude Include="GameObject.h" />
     <ClInclude Include="IKeyListener.h" />
     <ClInclude Include="IMouseListener.h" />
     <ClInclude Include="Mesh.h" />

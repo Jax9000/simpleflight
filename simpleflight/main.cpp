@@ -8,16 +8,12 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "assimp/cimport.h"
 
-#include "shader.h"
-#include "texture2D.h"
-#include "camera.cpp"
-#include "Model.h"
 #include "WindowController.h"
 
 #define WIDTH 1400
 #define HEIGHT 800
 
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+//Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 bool keys[1024];
 
 GLfloat deltaTime = 0.0f;
@@ -59,8 +55,16 @@ int main()
 	windowController->setHeight(800);
 	windowController->setWidth(1200);
 
+	GlewInit();
+
 	Scene scene;
-	
+
+	string nanosuit_path = "./Resources/Models/nanosuit/nanosuit.obj";
+	Shader* shader = new Shader("./model.vs", "./model.frag");
+	GameObject* nanosuit = new GameObject("nanosuit", nanosuit_path, shader);
+	scene.Add(nanosuit);
+
+
 	windowController->Draw(scene);
 
 	//glEnable(GL_DEPTH_TEST);

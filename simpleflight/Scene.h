@@ -1,9 +1,25 @@
 #pragma once
+#include <vector>
+
+#include "GL\glew.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+
+#include "camera.cpp"
+#include "GameObject.h"
+
+
 class Scene
 {
 public:
 	Scene();
 	~Scene();
-	void Draw();
+	void Draw(int width, int height);
+	void Add(GameObject* object);
+
+private:
+	std::vector<GameObject*> game_objects;
+	Camera camera;
 };
 

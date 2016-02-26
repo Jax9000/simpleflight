@@ -1,6 +1,6 @@
 #include "Model.h"
 
-Model::Model(GLchar* path)
+Model::Model(string path)
 {
 	this->loadModel(path);
 }

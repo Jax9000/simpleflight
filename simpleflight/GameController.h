@@ -3,7 +3,6 @@
 #include <iostream>
 #include "IKeyListener.h"
 #include "IMouseListener.h"
-//#include "EventController.h"
 #include "WindowController.h"
 
 using namespace std;
