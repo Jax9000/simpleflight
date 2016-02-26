@@ -1,10 +1,10 @@
 #include "GameObject.h"
 
-GameObject::GameObject(std::string name, std::string model_path, Shader* shader)
+GameObject::GameObject(std::string name, Model* model, Shader* shader)
 {
 	this->name = name;
 	this->shader = shader;
-	model = new Model(model_path);
+	this->model = model;
 }
 
 GameObject::~GameObject()

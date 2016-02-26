@@ -49,7 +49,8 @@ int main()
 
 	string nanosuit_path = "./Resources/Models/nanosuit/nanosuit.obj";
 	Shader* shader = new Shader("./model.vs", "./model.frag");
-	GameObject* nanosuit = new GameObject("nanosuit", nanosuit_path, shader);
+	Model* nanosuit_model = new Model(nanosuit_path);
+	GameObject* nanosuit = new GameObject("nanosuit", nanosuit_model, shader);
 	scene.Add(nanosuit);
 
 

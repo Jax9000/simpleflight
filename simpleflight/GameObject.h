@@ -7,7 +7,7 @@ using namespace std;
 class GameObject
 {
 public:
-	GameObject(string name, string model_path, Shader* shader);
+	GameObject(string name, Model* model, Shader* shader);
 	~GameObject();
 	virtual void Draw();
 
