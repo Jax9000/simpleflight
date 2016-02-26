@@ -103,7 +103,7 @@ int main()
 	//	// Swap the buffers
 	//	glfwSwapBuffers(window);
 	//}
-	system("pause");
 	glfwTerminate();
+	system("pause");
 	return 0;
 }

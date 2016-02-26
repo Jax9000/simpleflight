@@ -1,10 +1,8 @@
 #include "GameController.h"
 
-
 GameController::GameController()
 {
 	EventController::AddKeyListener(this);
-	EventController::AddMouseListener(this);
 }
 
 
@@ -19,17 +17,12 @@ GameController & GameController::GetInstance()
 
 void GameController::OnKeyPressed(int key)
 {
-	std::cout << "pressed: " << key << std::endl;
+	if (key == GLFW_KEY_ESCAPE)
+		WindowController::GetInstance().Terminate("Closing by user...");
 }
 
 void GameController::OnKeyHold(int key)
 {
 	std::cout << "hold: " <<  key << std::endl;
 }
-
-void GameController::OnMouseMoved(double xoffset, double yoffset)
-{
-	std::cout << "mouse moved: " << xoffset << " " << yoffset << std::endl;
-}
-
 GameController GameController::instance;

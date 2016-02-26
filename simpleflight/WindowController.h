@@ -1,6 +1,10 @@
+#include <iostream>
+#include <string>
 #include "GLFW\glfw3.h"
 #include "EventController.h"
 #include "Scene.h"
+
+using namespace std;
 
 class WindowController
 {
@@ -9,6 +13,7 @@ class WindowController
 	~WindowController();
 	static WindowController& GetInstance();
 	void Draw(Scene scene);
+	void Terminate(std::string message);
 
 	int getWidht() { return width; }
 	void setWidth(int value);

@@ -1,10 +1,14 @@
 #pragma once
+#include <string>
 #include <iostream>
 #include "IKeyListener.h"
 #include "IMouseListener.h"
-#include "EventController.h"
+//#include "EventController.h"
+#include "WindowController.h"
 
-class GameController : public IKeyListener, public IMouseListener
+using namespace std;
+
+class GameController : public IKeyListener
 {
 public:
 	GameController();
@@ -13,7 +17,6 @@ public:
 
 	virtual void OnKeyPressed(int key) override;
 	virtual void OnKeyHold(int key) override;
-	virtual void OnMouseMoved(double xoffset, double yoffset) override;
 
 private: 
 	static GameController instance;

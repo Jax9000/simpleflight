@@ -1,5 +1,4 @@
 #include "WindowController.h"
-#include <iostream>
 
 WindowController::WindowController()
 {
@@ -31,6 +30,12 @@ void WindowController::Draw(Scene scene)
 		// next frame
 		glfwSwapBuffers(glfw_window);
 	}
+}
+
+void WindowController::Terminate(string message)
+{
+	cout << message << endl;
+	glfwSetWindowShouldClose(glfw_window, GL_TRUE);
 }
 
 void WindowController::init()
