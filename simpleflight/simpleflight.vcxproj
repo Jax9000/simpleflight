@@ -90,6 +90,7 @@
     <Text Include="model.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="EventController.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="GameObject.h" />
