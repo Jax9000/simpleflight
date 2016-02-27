@@ -16,6 +16,16 @@ void GameObject::Draw()
 	model->Draw(*shader);
 }
 
+void GameObject::Transform(glm::vec3 value)
+{
+	model_matrix = glm::translate(model_matrix, value); // Translate it down a bit so it's at the center of the scene
+}
+
+void GameObject::Rotate(glm::vec3 value)
+{
+	model_matrix = glm::scale(model_matrix, value);	// It's a bit too big for our scene, so scale it down
+}
+
 string GameObject::GetName()
 {
 	return name;

@@ -15,7 +15,7 @@ GameController & GameController::GetInstance()
 	return instance;
 }
 
-void GameController::OnKeyPressed(int key)
+void GameController::OnKeyPress(int key)
 {
 	if (key == GLFW_KEY_ESCAPE)
 		WindowController::GetInstance().Terminate("Closing by user...");

@@ -9,6 +9,7 @@
 #include "assimp/cimport.h"
 
 #include "Scene.h"
+#include "Time.h"
 
 using namespace std;
 
@@ -18,7 +19,7 @@ class WindowController
 	WindowController();
 	~WindowController();
 	static WindowController& GetInstance();
-	void Draw(Scene scene);
+	void Update(Scene scene);
 	void Terminate(std::string message);
 
 	int getWidht() { return width; }

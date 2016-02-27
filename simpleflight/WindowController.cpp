@@ -15,15 +15,18 @@ WindowController& WindowController::GetInstance()
 	return instance;
 }
 
-void WindowController::Draw(Scene scene)
+void WindowController::Update(Scene scene)
 {
 	while (!glfwWindowShouldClose(glfw_window))
 	{
 		glfwPollEvents();
+		EventController::KeyNotify();
 
 		// Clear the colorbuffer
 		glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		Time::Update(glfwGetTime());
 
 		scene.Draw(width, height);
 
@@ -79,5 +82,5 @@ void WindowController::mouseEventProvide(GLFWwindow* window, double xpos, double
 }
 void WindowController::keyEvenetProvide(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-	EventController::KeyNotify(key, action);
+	EventController::KeyCheck(key, action);
 }

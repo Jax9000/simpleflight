@@ -82,6 +82,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="texture2D.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="WindowController.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -96,12 +97,14 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="IKeyListener.h" />
     <ClInclude Include="IMouseListener.h" />
+    <ClInclude Include="KeyStatus.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="texture2D.h" />
     <ClInclude Include="shader.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="WindowController.h" />
   </ItemGroup>

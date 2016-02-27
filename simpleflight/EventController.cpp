@@ -36,30 +36,25 @@ void EventController::RemoveKeyListener(IKeyListener* listener)
 	std::remove(key_listiners.begin(), key_listiners.end(), listener);
 }
 
-void EventController::KeyNotify(int key, int action)
+void EventController::KeyCheck(int key, int action)
 {
 	if (action == GLFW_PRESS)
 	{
-		key_press = true;
-		for (IKeyListener* listener : key_listiners)
-			listener->OnKeyPressed(key);
+		keys_status[key].is_press = true;
+		keys_activated.push_back(key);
 	}
 
 	if (action == GLFW_RELEASE)
 	{
-		key_press = false;
-		key_hold = false;
+		keys_status[key].is_press = false;
+		keys_status[key].is_hold = false;
+		std::remove(keys_activated.begin(), keys_activated.end(), key);
 	}
 
-	if (key_hold)
+	if (keys_status[key].is_press)
 	{
-		for (IKeyListener* listener : key_listiners)
-			listener->OnKeyHold(key);
-	}
-
-	if (key_press)
-	{
-		key_hold = true;
+		keys_status[key].is_hold = true;
+		keys_status[key].is_press = false;
 	}
 }
 
@@ -82,10 +77,28 @@ void EventController::MouseNotify(double xpos, double ypos)
 		listener->OnMouseMoved(xoffset, yoffset);
 }
 
+void EventController::KeyNotify()
+{
+	for (int key : keys_activated)
+	{
+		if (keys_status[key].is_hold)
+			for (IKeyListener* listener : key_listiners)
+				listener->OnKeyHold(key);
+	}
+
+	for (int key : keys_activated)
+	{
+		if (keys_status[key].is_press)
+			for (IKeyListener* listener : key_listiners)
+				listener->OnKeyPress(key);
+	}
+
+}
+
 std::vector<IKeyListener*> EventController::key_listiners;
 std::vector<IMouseListener*> EventController::mouse_listiners;
-bool EventController::key_press = false;
-bool EventController::key_hold = false;
+KeyStatus EventController::keys_status[1024];
+std::vector<int> EventController::keys_activated;
 bool EventController::first_mouse_measurment = true;
 double EventController::last_y = 0;
 double EventController::last_x = 0;

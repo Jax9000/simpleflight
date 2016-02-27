@@ -1,9 +1,10 @@
 #include "Camera.h"
 
 // Constructor with vectors
-Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM)
+Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), Movement_Speed(SPEED), Mouse_Sensitivity(SENSITIVTY), Zoom(ZOOM)
 {
 	EventController::AddMouseListener(this);
+	EventController::AddKeyListener(this);
 	this->Position = position;
 	this->WorldUp = up;
 	this->Yaw = yaw;
@@ -12,14 +13,21 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, GLfloat yaw, GLfloat pitch) : F
 }
 
 // Constructor with scalar values
-Camera::Camera(GLfloat posX, GLfloat posY, GLfloat posZ, GLfloat upX, GLfloat upY, GLfloat upZ, GLfloat yaw, GLfloat pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVTY), Zoom(ZOOM)
+Camera::Camera(GLfloat posX, GLfloat posY, GLfloat posZ, GLfloat upX, GLfloat upY, GLfloat upZ, GLfloat yaw, GLfloat pitch) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), Movement_Speed(SPEED), Mouse_Sensitivity(SENSITIVTY), Zoom(ZOOM)
 {
-	//EventController::AddMouseListener(this);
+	EventController::AddMouseListener(this);
+	EventController::AddKeyListener(this);
 	this->Position = glm::vec3(posX, posY, posZ);
 	this->WorldUp = glm::vec3(upX, upY, upZ);
 	this->Yaw = yaw;
 	this->Pitch = pitch;
 	this->updateCameraVectors();
+}
+
+Camera::~Camera()
+{
+	EventController::RemoveKeyListener(this);
+	EventController::RemoveMouseListener(this);
 }
 
 // Returns the view matrix calculated using Eular Angles and the LookAt Matrix
@@ -31,7 +39,7 @@ glm::mat4 Camera::GetViewMatrix()
 // Processes input received from any keyboard-like input system. Accepts input parameter in the form of camera defined ENUM (to abstract it from windowing systems)
 void Camera::ProcessKeyboard(Camera_Movement direction, GLfloat deltaTime)
 {
-	GLfloat velocity = this->MovementSpeed * deltaTime;
+	GLfloat velocity = this->Movement_Speed * deltaTime;
 	if (direction == FORWARD)
 		this->Position += this->Front * velocity;
 	if (direction == BACKWARD)
@@ -45,8 +53,8 @@ void Camera::ProcessKeyboard(Camera_Movement direction, GLfloat deltaTime)
 // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.
 void Camera::ProcessMouseMovement(GLfloat xoffset, GLfloat yoffset, GLboolean constrainPitch)
 {
-	xoffset *= this->MouseSensitivity;
-	yoffset *= this->MouseSensitivity;
+	xoffset *= this->Mouse_Sensitivity;
+	yoffset *= this->Mouse_Sensitivity;
 
 	this->Yaw += xoffset;
 	this->Pitch += yoffset;
@@ -89,7 +97,30 @@ void Camera::updateCameraVectors()
 	this->Up = glm::normalize(glm::cross(this->Right, this->Front));
 }
 
+void Camera::OnKeyPress(int key)
+{
+	onKeyEvent(key);
+}
+
+void Camera::OnKeyHold(int key)
+{
+	onKeyEvent(key);
+}
+
 void Camera::OnMouseMoved(double xoffset, double yoffset)
 {
 	ProcessMouseMovement(xoffset, yoffset);
+}
+
+void Camera::onKeyEvent(int key)
+{
+	float Delta_Time = Time::GetDeltaTime();
+	if (key == GLFW_KEY_W)
+		 ProcessKeyboard(FORWARD, Delta_Time);
+	if (key == GLFW_KEY_S)
+		 ProcessKeyboard(BACKWARD, Delta_Time);
+	if (key == GLFW_KEY_A)
+		 ProcessKeyboard(LEFT, Delta_Time);
+	if (key == GLFW_KEY_D)
+		 ProcessKeyboard(RIGHT, Delta_Time);
 }

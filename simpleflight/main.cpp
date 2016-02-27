@@ -51,10 +51,15 @@ int main()
 	Shader* shader = new Shader("./model.vs", "./model.frag");
 	Model* nanosuit_model = new Model(nanosuit_path);
 	GameObject* nanosuit = new GameObject("nanosuit", nanosuit_model, shader);
+	nanosuit->Transform(glm::vec3(2.0f, 0.0f, 0.0f));
 	scene.Add(nanosuit);
 
+	GameObject* nanosuit1 = new GameObject("nanosuit_clone", nanosuit_model, shader);
+	nanosuit1->Transform(glm::vec3(3.0f, 5.0f, 5.0f));
+	scene.Add(nanosuit1);
 
-	windowController->Draw(scene);
+
+	windowController->Update(scene);
 
 	//glEnable(GL_DEPTH_TEST);
 

@@ -3,6 +3,6 @@
 class IKeyListener
 {
 public:
-	virtual void OnKeyPressed(int key);
+	virtual void OnKeyPress(int key);
 	virtual void OnKeyHold(int key);
 };

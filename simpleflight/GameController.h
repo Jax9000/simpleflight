@@ -14,7 +14,7 @@ public:
 	~GameController();
 	static GameController& GetInstance();
 
-	virtual void OnKeyPressed(int key) override;
+	virtual void OnKeyPress(int key) override;
 	virtual void OnKeyHold(int key) override;
 
 private: 
