@@ -25,19 +25,19 @@ Skybox::~Skybox()
 
 void Skybox::Draw(glm::mat4 projection, glm::mat4 view)
 {
-	glDepthMask(GL_FALSE);// Remember to turn depth writing off
+	glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
 	shader->Use();
 	view = glm::mat4(glm::mat3(view));	// Remove any translation component of the view matrix
 	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
+	// skybox cube
 	glBindVertexArray(VAO);
 	glActiveTexture(GL_TEXTURE0);
 	glUniform1i(glGetUniformLocation(shader->Program, "skybox"), 0);
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 	glDrawArrays(GL_TRIANGLES, 0, 36);
 	glBindVertexArray(0);
-	glDepthMask(GL_TRUE);
+	glDepthFunc(GL_LESS); // Set depth function back to default
 }
 
 void Skybox::initCube()

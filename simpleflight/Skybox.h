@@ -70,5 +70,6 @@ private:
 
 	GLuint textureID;
 	GLuint VAO, VBO;
+
 };
 
