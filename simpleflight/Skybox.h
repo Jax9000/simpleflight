@@ -62,7 +62,7 @@ public:
 	//************************************
 	Skybox(string name, string textures_dir_path, string file_extensions);
 	~Skybox();
-	virtual void Draw() override;
+	virtual void Draw(glm::mat4 projection, glm::mat4 view) override;
 
 private:
 	void initCube();

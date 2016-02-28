@@ -49,6 +49,9 @@ int main()
 
 	Scene scene;
 
+	Skybox* skybox = new Skybox("skybox", "./Resources/Textures/TropicalSunnyDay", ".png");
+	scene.Add(skybox);
+
 	string nanosuit_path = "./Resources/Models/nanosuit/nanosuit.obj";
 	Shader* shader = new Shader("./model.vs", "./model.frag");
 	Model* nanosuit_model = new Model(nanosuit_path);
@@ -60,10 +63,6 @@ int main()
 	nanosuit1->Transform(glm::vec3(3.0f, 5.0f, 5.0f));
 	scene.Add(nanosuit1);
 
-	Skybox* skybox = new Skybox("skybox", "./Resources/Textures/TropicalSunnyDay", ".jpg");
-	scene.Add(skybox);
-	auto test = skybox->GetShader();
-	auto test0 = skybox->GetName();
 	windowController->Update(scene);
 
 	//glEnable(GL_DEPTH_TEST);

@@ -10,15 +10,18 @@ GameObject::GameObject(std::string name, Model* model, Shader* shader)
 	this->name = name;
 	this->shader = shader;
 	this->model = model;
-	has_model_matrix = true;
 }
 
 GameObject::~GameObject()
 {
 }
 
-void GameObject::Draw()
+void GameObject::Draw(glm::mat4 projection, glm::mat4 view)
 {
+	shader->Use();
+	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "model"), 1, GL_FALSE, glm::value_ptr(model_matrix));
 	model->Draw(*shader);
 }
 
@@ -50,11 +53,6 @@ Shader* GameObject::GetShader()
 void GameObject::SetShader(Shader* shader)
 {
 	this->shader = shader;
-}
-
-bool GameObject::HasModelMatrix()
-{
-	return has_model_matrix;
 }
 
 glm::mat4 GameObject::GetModelMatrix()

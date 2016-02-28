@@ -12,7 +12,7 @@ public:
 	GameObject();
 	GameObject(string name, Model* model, Shader* shader);
 	~GameObject();
-	virtual void Draw();
+	virtual void Draw(glm::mat4 projection, glm::mat4 view);
 	void Transform(glm::vec3 value);
 	void Rotate(glm::vec3 value);
 
@@ -23,8 +23,6 @@ public:
 	Shader* GetShader();
 	void SetShader(Shader* shader);
 
-	bool HasModelMatrix();
-
 	glm::mat4 GetModelMatrix();
 #pragma endregion
 
@@ -32,7 +30,6 @@ protected:
 	string name;
 	Model* model;
 	Shader* shader;
-	bool has_model_matrix;
 	glm::mat4 model_matrix;
 	
 };

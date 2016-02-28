@@ -17,16 +17,20 @@ Skybox::Skybox(string name, string textures_dir_path, string file_extension)
 
 	this->name = name;
 	this->shader = shader;
-	has_model_matrix = false;
 }
 
 Skybox::~Skybox()
 {
 }
 
-void Skybox::Draw()
+void Skybox::Draw(glm::mat4 projection, glm::mat4 view)
 {
-	glDepthMask(GL_FALSE);
+	glDepthMask(GL_FALSE);// Remember to turn depth writing off
+	shader->Use();
+	view = glm::mat4(glm::mat3(view));	// Remove any translation component of the view matrix
+	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
 	glBindVertexArray(VAO);
 	glActiveTexture(GL_TEXTURE0);
 	glUniform1i(glGetUniformLocation(shader->Program, "skybox"), 0);

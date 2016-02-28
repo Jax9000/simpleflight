@@ -19,16 +19,7 @@ void Scene::Draw(int width, int height)
 
 	for (GameObject* object : game_objects)
 	{
-		Shader* shader = object->GetShader();
-		shader->Use();
-
-		glUniformMatrix4fv(glGetUniformLocation(shader->Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(glGetUniformLocation(shader->Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
-		glm::mat4 model_matrix = object->GetModelMatrix();
-		if (object->HasModelMatrix())
-			glUniformMatrix4fv(glGetUniformLocation(shader->Program, "model"), 1, GL_FALSE, glm::value_ptr(model_matrix));
-
-		object->Draw();
+		object->Draw(projection, view);
 	}
 }
 
