@@ -28,16 +28,22 @@ void EventController::AddKeyListener(IKeyListener* listener)
 
 void EventController::RemoveMouseListener(IMouseListener* listener)
 {
-	std::remove(mouse_listiners.begin(), mouse_listiners.end(), listener);
+	mouse_listiners.erase(std::remove(mouse_listiners.begin(), mouse_listiners.end(), listener), mouse_listiners.end());
 }
 
 void EventController::RemoveKeyListener(IKeyListener* listener)
 {
-	std::remove(key_listiners.begin(), key_listiners.end(), listener);
+	key_listiners.erase(std::remove(key_listiners.begin(), key_listiners.end(), listener), key_listiners.end());
 }
 
 void EventController::KeyCheck(int key, int action)
 {
+	if (keys_status[key].is_press)
+	{
+		keys_status[key].is_hold = true;
+		keys_status[key].is_press = false;
+	}
+
 	if (action == GLFW_PRESS)
 	{
 		keys_status[key].is_press = true;
@@ -48,13 +54,7 @@ void EventController::KeyCheck(int key, int action)
 	{
 		keys_status[key].is_press = false;
 		keys_status[key].is_hold = false;
-		std::remove(keys_activated.begin(), keys_activated.end(), key);
-	}
-
-	if (keys_status[key].is_press)
-	{
-		keys_status[key].is_hold = true;
-		keys_status[key].is_press = false;
+		keys_activated.erase(std::remove(keys_activated.begin(), keys_activated.end(), key), keys_activated.end());
 	}
 }
 
