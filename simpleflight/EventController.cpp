@@ -55,6 +55,8 @@ void EventController::KeyCheck(int key, int action)
 		keys_status[key].is_press = false;
 		keys_status[key].is_hold = false;
 		keys_activated.erase(std::remove(keys_activated.begin(), keys_activated.end(), key), keys_activated.end());
+		for (IKeyListener* listener : key_listiners)
+			listener->OnKeyRelease(key);
 	}
 }
 

@@ -48,6 +48,10 @@ void Camera::ProcessKeyboard(Camera_Movement direction, GLfloat deltaTime)
 		this->Position -= this->Right * velocity;
 	if (direction == RIGHT)
 		this->Position += this->Right * velocity;
+	if (direction == UP)
+		this->Position += this->WorldUp * velocity;
+	if (direction == DOWN)
+		this->Position -= this->WorldUp * velocity;
 }
 
 // Processes input received from a mouse input system. Expects the offset value in both the x and y direction.
@@ -100,12 +104,21 @@ void Camera::updateCameraVectors()
 void Camera::OnKeyPress(int key)
 {
 	onKeyEvent(key);
+	if (key == GLFW_KEY_LEFT_SHIFT || key == GLFW_KEY_RIGHT_SHIFT)
+		Movement_Speed = BOOST;
 }
 
 void Camera::OnKeyHold(int key)
 {
 	onKeyEvent(key);
 }
+
+void Camera::OnKeyRelease(int key)
+{
+	if (key == GLFW_KEY_LEFT_SHIFT || key == GLFW_KEY_RIGHT_SHIFT)
+		Movement_Speed = SPEED;
+}
+
 
 void Camera::OnMouseMoved(double xoffset, double yoffset)
 {
@@ -123,4 +136,8 @@ void Camera::onKeyEvent(int key)
 		 ProcessKeyboard(LEFT, Delta_Time);
 	if (key == GLFW_KEY_D)
 		 ProcessKeyboard(RIGHT, Delta_Time);
+	if (key == GLFW_KEY_SPACE)
+		ProcessKeyboard(UP, Delta_Time);
+	if (key == GLFW_KEY_LEFT_CONTROL)
+		ProcessKeyboard(DOWN, Delta_Time);
 }

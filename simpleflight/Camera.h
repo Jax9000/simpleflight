@@ -15,7 +15,9 @@ enum Camera_Movement {
 	FORWARD,
 	BACKWARD,
 	LEFT,
-	RIGHT
+	RIGHT,
+	UP,
+	DOWN
 };
 
 // Default camera values
@@ -24,6 +26,7 @@ const GLfloat PITCH = 0.0f;
 const GLfloat SPEED = 3.0f;
 const GLfloat SENSITIVTY = 0.1f;
 const GLfloat ZOOM = 45.0f;
+const GLfloat BOOST = 10.0f;
 
 class Camera : IMouseListener, IKeyListener
 {
@@ -51,6 +54,7 @@ public:
 	virtual void OnMouseMoved(double xoffset, double yoffset) override;
 	virtual void OnKeyPress(int key) override;
 	virtual void OnKeyHold(int key) override;
+	virtual void OnKeyRelease(int key) override;
 
 	// Camera Attributes
 	glm::vec3 Position;
@@ -69,5 +73,7 @@ public:
 private:
 	void updateCameraVectors();
 	void onKeyEvent(int key);
+
+
 
 };
