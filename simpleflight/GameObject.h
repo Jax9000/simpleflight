@@ -9,6 +9,7 @@ using namespace std;
 class GameObject
 {
 public:
+	GameObject();
 	GameObject(string name, Model* model, Shader* shader);
 	~GameObject();
 	virtual void Draw();
@@ -22,14 +23,16 @@ public:
 	Shader* GetShader();
 	void SetShader(Shader* shader);
 
+	bool HasModelMatrix();
+
 	glm::mat4 GetModelMatrix();
 #pragma endregion
 
-private:
+protected:
 	string name;
 	Model* model;
 	Shader* shader;
+	bool has_model_matrix;
 	glm::mat4 model_matrix;
 	
 };
-
