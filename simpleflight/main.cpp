@@ -24,6 +24,7 @@ GLint GlewInit()
 		return -1;
 
 	glViewport(0, 0, WIDTH, HEIGHT);
+	glEnable(GL_DEPTH_TEST);
 	return 0;
 }
 
