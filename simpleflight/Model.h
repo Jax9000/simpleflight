@@ -13,6 +13,7 @@ public:
 	/*  Functions   */
 	Model(string path);
 	void Draw(Shader shader);
+	static GLint LoadTexture(const char* path, string directory);
 private:
 	/*  Model Data  */
 	vector<Mesh> meshes;
@@ -24,5 +25,4 @@ private:
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 	vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type,
 		string typeName);
-	GLint TextureFromFile(const char* path, string directory);
 };

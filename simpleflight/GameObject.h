@@ -14,6 +14,7 @@ public:
 	~GameObject();
 	virtual void Draw(glm::mat4 projection, glm::mat4 view);
 	void Transform(glm::vec3 value);
+	void Scale(glm::vec3 value);
 	void Rotate(glm::vec3 value);
 
 #pragma region getters and setters

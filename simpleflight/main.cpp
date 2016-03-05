@@ -8,8 +8,9 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "assimp/cimport.h"
 
-#include "WindowController.h"
 #include "Skybox.h"
+#include "Plane.h"
+#include "WindowController.h"
 
 #define WIDTH 1400
 #define HEIGHT 800
@@ -52,16 +53,17 @@ int main()
 	Skybox* skybox = new Skybox("skybox", "./Resources/Textures/TropicalSunnyDay", ".png");
 	scene.Add(skybox);
 
-	string nanosuit_path = "./Resources/Models/nanosuit/nanosuit.obj";
+	string plane_path = "./Resources/Models/Boeing 747/Boeing747.obj";
 	Shader* shader = new Shader("./model.vs", "./model.frag");
-	Model* nanosuit_model = new Model(nanosuit_path);
-	GameObject* nanosuit = new GameObject("nanosuit", nanosuit_model, shader);
-	nanosuit->Transform(glm::vec3(2.0f, 0.0f, 0.0f));
-	scene.Add(nanosuit);
+	//Model* plane_model = new Model(plane_path);
+	//GameObject* plane = new GameObject("Boeing 747", plane_model, shader);
+	//plane->Transform(glm::vec3(2.0f, 0.0f, 0.0f));
+	//plane->Scale(glm::vec3(2.0f, 2.0f, 2.0f));
+	//scene.Add(plane);
 
-	GameObject* nanosuit1 = new GameObject("nanosuit_clone", nanosuit_model, shader);
-	nanosuit1->Transform(glm::vec3(3.0f, 5.0f, 5.0f));
-	scene.Add(nanosuit1);
+
+	Plane* plane = new Plane("grass.png", "./Resources/Textures", shader, 1000);
+	scene.Add(plane);
 
 	windowController->Update(scene);
 

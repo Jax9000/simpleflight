@@ -30,9 +30,16 @@ void GameObject::Transform(glm::vec3 value)
 	model_matrix = glm::translate(model_matrix, value);
 }
 
-void GameObject::Rotate(glm::vec3 value)
+void GameObject::Scale(glm::vec3 value)
 {
 	model_matrix = glm::scale(model_matrix, value);
+}
+
+void GameObject::Rotate(glm::vec3 value)
+{
+	model_matrix = glm::rotate(model_matrix, value.x, glm::vec3(1.0f, 0.0f, 0.0f));
+	model_matrix = glm::rotate(model_matrix, value.y, glm::vec3(0.0f, 1.0f, 0.0f));
+	model_matrix = glm::rotate(model_matrix, value.z, glm::vec3(0.0f, 0.0f, 1.0f));
 }
 
 string GameObject::GetName()
