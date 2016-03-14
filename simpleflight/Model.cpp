@@ -43,8 +43,6 @@ void Model::processNode(aiNode* node, const aiScene* scene) {
 	for (GLuint i = 0; i < node->mNumChildren; i++) {
 		this->processNode(node->mChildren[i], scene);
 	}
-
-	cout << this->meshes.size() << endl;
 }
 
 Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
@@ -144,6 +142,7 @@ GLint Model::LoadTexture(const char* path, string directory) {
 	//Generate texture ID and load texture data 
 	string filename = string(path);
 	filename = directory + '/' + filename;
+	cout << filename << endl;
 	GLuint textureID;
 	glGenTextures(1, &textureID);
 	int width, height;

@@ -12,6 +12,14 @@ GameObject::GameObject(std::string name, Model* model, Shader* shader)
 	this->model = model;
 }
 
+GameObject::GameObject(const GameObject& object)
+{
+	this->model = object.model;
+	this->shader = object.shader;
+	this->model_matrix = object.model_matrix;
+	this->name = object.name + "Clone";
+}
+
 GameObject::~GameObject()
 {
 }

@@ -11,6 +11,7 @@ class GameObject
 public:
 	GameObject();
 	GameObject(string name, Model* model, Shader* shader);
+	GameObject(const GameObject& object);
 	~GameObject();
 	virtual void Draw(glm::mat4 projection, glm::mat4 view);
 	void Transform(glm::vec3 value);

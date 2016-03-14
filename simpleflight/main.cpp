@@ -10,14 +10,18 @@
 
 #include "Skybox.h"
 #include "Plane.h"
+#include "AirPlane.h"
 #include "WindowController.h"
 
 #define WIDTH 1400
 #define HEIGHT 800
 
-//Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-bool keys[1024];
-
+string plane_dirpath = "./Resources/Textures";
+string plane_texture_name = "grass.png";
+string skybox_path = "./Resources/Textures/TropicalSunnyDay";
+string skybox_file_extension = ".png";
+string airplane_path = "./Resources/Models/Boeing 747/Boeing747.obj";
+string building_path = "./Resources/Models/building/building.obj";
 
 GLint GlewInit()
 {
@@ -50,63 +54,31 @@ int main()
 
 	Scene scene;
 
-	Skybox* skybox = new Skybox("skybox", "./Resources/Textures/TropicalSunnyDay", ".png");
-	scene.Add(skybox);
-
-	string plane_path = "./Resources/Models/Boeing 747/Boeing747.obj";
 	Shader* shader = new Shader("./model.vs", "./model.frag");
-	//Model* plane_model = new Model(plane_path);
-	//GameObject* plane = new GameObject("Boeing 747", plane_model, shader);
-	//plane->Transform(glm::vec3(2.0f, 0.0f, 0.0f));
-	//plane->Scale(glm::vec3(2.0f, 2.0f, 2.0f));
-	//scene.Add(plane);
 
+	//Skybox* skybox = new Skybox(skybox_path, skybox_file_extension);
+	//scene.Add(skybox);
 
-	Plane* plane = new Plane("grass.png", "./Resources/Textures", shader, 1000);
+	Plane* plane = new Plane(plane_texture_name, plane_dirpath, shader, 10000);
 	scene.Add(plane);
+
+	//Model* airplane_model = new Model(airplane_path);
+	//GameObject* airplane = new GameObject("Boeing 747", airplane_model, shader);
+	//scene.Add(airplane);
+
+	Model* building_model = new Model(building_path);
+	GameObject* building = new GameObject("Building", building_model, shader);
+	building->Rotate(glm::vec3(0, 0, 90.0f));
+	building->Transform(glm::vec3(11.8f * 5, 250, 0));
+	building->Scale(glm::vec3(5, 5, 5));
+	scene.Add(building);
+
+	building = new GameObject(*building);
+	building->Transform(glm::vec3(0, -5, 15.0f));
+	scene.Add(building);
 
 	windowController->Update(scene);
 
-	//glEnable(GL_DEPTH_TEST);
-
-	//if (GlewInit() != 0)
-	//	return Terminate("Failed to init glew");
-
-	//Model nanosuit("./Resources/Models/nanosuit/nanosuit.obj");
-	//Shader modelShader("./model.vs", "./model.frag");
-
-	//while (!glfwWindowShouldClose(window))
-	//{
-	//	// Set frame time
-	//	GLfloat currentFrame = glfwGetTime();
-	//	deltaTime = currentFrame - lastFrame;
-	//	lastFrame = currentFrame;
-
-	//	// Check and call events
-	//	glfwPollEvents();
-	//	Do_Movement();
-
-	//	// Clear the colorbuffer
-	//	glClearColor(0.15f, 0.15f, 0.15f, 1.0f);
-	//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//	modelShader.Use();   // <-- Don't forget this one!
-	//					// Transformation matrices
-	//	glm::mat4 projection = glm::perspective(camera.Zoom, (float)WIDTH / (float)HEIGHT, 0.1f, 100.0f);
-	//	glm::mat4 view = camera.GetViewMatrix();
-	//	glUniformMatrix4fv(glGetUniformLocation(modelShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-	//	glUniformMatrix4fv(glGetUniformLocation(modelShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
-
-	//	// Draw the loaded model
-	//	glm::mat4 model;
-	//	model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // Translate it down a bit so it's at the center of the scene
-	//	model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// It's a bit too big for our scene, so scale it down
-	//	glUniformMatrix4fv(glGetUniformLocation(modelShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-	//	nanosuit.Draw(modelShader);
-
-	//	// Swap the buffers
-	//	glfwSwapBuffers(window);
-	//}
 	glfwTerminate();
 	system("pause");
 	return 0;

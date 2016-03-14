@@ -2,7 +2,7 @@
 
 
 
-Skybox::Skybox(string name, string textures_dir_path, string file_extension)
+Skybox::Skybox(string textures_dir_path, string file_extension)
 {
 	Shader* shader = new Shader("./skybox.vs", "./skybox.frag");
 
@@ -12,10 +12,7 @@ Skybox::Skybox(string name, string textures_dir_path, string file_extension)
 		faces.push_back(textures_dir_path + "/" + files[i] + file_extension);
 
 	textureID = loadCubemap(faces);
-
 	initCube();
-
-	this->name = name;
 	this->shader = shader;
 }
 

@@ -60,7 +60,7 @@ public:
 	// Requirements: Where .ext is extension like jpg or png. Chceck supported extension at SOIL lib website
 	// Usage: Skybox("cool random name", "./Resources/Textures/Cubemapdir", ".jpg")
 	//************************************
-	Skybox(string name, string textures_dir_path, string file_extensions);
+	Skybox(string textures_dir_path, string file_extensions);
 	~Skybox();
 	virtual void Draw(glm::mat4 projection, glm::mat4 view) override;
 

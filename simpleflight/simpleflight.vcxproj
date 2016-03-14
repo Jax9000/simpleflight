@@ -70,8 +70,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AirPlane.cpp" />
     <ClCompile Include="camera.cpp" />
-    <ClCompile Include="Cube.cpp" />
     <ClCompile Include="EventController.cpp" />
     <ClCompile Include="GameController.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -94,8 +94,8 @@
     <Text Include="model.vs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AirPlane.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="Cube.h" />
     <ClInclude Include="EventController.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="GameObject.h" />

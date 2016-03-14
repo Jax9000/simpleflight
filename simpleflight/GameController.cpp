@@ -23,6 +23,6 @@ void GameController::OnKeyPress(int key)
 
 void GameController::OnKeyHold(int key)
 {
-	std::cout << "hold: " <<  key << std::endl;
+
 }
 GameController GameController::instance;

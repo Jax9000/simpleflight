@@ -11,11 +11,11 @@ Plane::Plane(string path, string directory, Shader* shader, float scale)
     vertex.Normal = glm::vec3(0, 0, 0);
 
 	vertex.Position = glm::vec3(1.0f, 0.0f, 1.0f);
-	vertex.TexCoords = glm::vec2(scale, scale);
+	vertex.TexCoords = glm::vec2(scale/10, scale/10);
 	vertices.push_back(vertex);
 
 	vertex.Position = glm::vec3(1.0f, 0.0f, -1.0f);
-	vertex.TexCoords = glm::vec2(scale, 0.0f);
+	vertex.TexCoords = glm::vec2(scale/10, 0.0f);
 	vertices.push_back(vertex);
 
 	vertex.Position = glm::vec3(-1.0f, 0.0f, -1.0f);
@@ -23,7 +23,7 @@ Plane::Plane(string path, string directory, Shader* shader, float scale)
 	vertices.push_back(vertex);
 
 	vertex.Position = glm::vec3(-1.0f, 0.0f, 1.0f);
-	vertex.TexCoords = glm::vec2(0.0f, scale);
+	vertex.TexCoords = glm::vec2(0.0f, scale/10);
 	vertices.push_back(vertex);
 
 	GLuint indices_tab[6] = { 0, 1, 3, 1, 2, 3 };

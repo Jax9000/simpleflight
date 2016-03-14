@@ -14,7 +14,7 @@ Scene::~Scene()
 
 void Scene::Draw(int width, int height)
 {
-	glm::mat4 projection = glm::perspective(camera->Zoom, (float)width / (float)height, 0.1f, 1000000.0f);
+	glm::mat4 projection = glm::perspective(camera->Zoom, (float)width / (float)height, 0.1f, 100000.0f);
 	glm::mat4 view = camera->GetViewMatrix();
 
 	for (GameObject* object : game_objects)
