@@ -33,6 +33,10 @@ void GameObject::Draw(glm::mat4 projection, glm::mat4 view)
 	model->Draw(*shader);
 }
 
+void GameObject::Update()
+{
+}
+
 void GameObject::Transform(glm::vec3 value)
 {
 	model_matrix = glm::translate(model_matrix, value);

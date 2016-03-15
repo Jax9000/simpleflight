@@ -68,6 +68,4 @@ void Plane::OnKeyPress(int key)
 
 void Plane::OnKey(int key)
 {
-	if (key == GLFW_KEY_LEFT)
-		Rotate(glm::vec3(0.0f, 0.10f, 0.0f));
 }

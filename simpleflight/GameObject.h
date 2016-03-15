@@ -14,6 +14,7 @@ public:
 	GameObject(const GameObject& object);
 	~GameObject();
 	virtual void Draw(glm::mat4 projection, glm::mat4 view);
+	virtual void Update();
 	void Transform(glm::vec3 value);
 	void Scale(glm::vec3 value);
 	void Rotate(glm::vec3 value);

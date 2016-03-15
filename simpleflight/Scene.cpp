@@ -19,6 +19,11 @@ void Scene::Draw(int width, int height)
 
 	for (GameObject* object : game_objects)
 	{
+		object->Update();
+	}
+
+	for (GameObject* object : game_objects)
+	{
 		object->Draw(projection, view);
 	}
 }
