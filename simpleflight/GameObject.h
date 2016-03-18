@@ -19,6 +19,8 @@ public:
 	virtual void Draw(glm::mat4 projection, glm::mat4 view);
 	virtual void Update();
 	void ApplyForce(glm::vec3 force, glm::vec3 rel_pos);
+	void ApplyTransformedForce(glm::vec3 force, glm::vec3 rel_pos);
+	void ApplyTorqueForce(glm::vec3 torque);
 	void Transform(glm::vec3 value);
 	void Scale(glm::vec3 value);
 	void Rotate(glm::vec3 value);
@@ -35,6 +37,9 @@ public:
 
 	int GetMass() const { return mass; }
 	void SetMass(int val) { mass = val; }
+
+	glm::vec3 GetPosition();
+	glm::vec3 GetRotation();
 #pragma endregion
 protected:
 	string name;

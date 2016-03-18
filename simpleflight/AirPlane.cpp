@@ -26,32 +26,37 @@ void AirPlane::OnKey(int key)
 	switch (key)
 	{
 	case GLFW_KEY_UP:
-		//if (acceleration < max_acceleration)
-		//	acceleration += delta_acceleration * delta_time;
-		ApplyForce(glm::vec3(0, 0, -75), glm::vec3(0, 0, 0));
+		ApplyTorqueForce(glm::vec3(-1, 0, 0));
 		break;
 	case GLFW_KEY_DOWN:
-		ApplyForce(glm::vec3(0, 0, 15), glm::vec3(0, 0, 0));
+		ApplyTorqueForce(glm::vec3(1, 0, 0));
 		break;
 	case GLFW_KEY_LEFT:
-		ApplyForce(glm::vec3(0, 10, 0), glm::vec3(5, 0, 0));
+		ApplyTorqueForce(glm::vec3(0, 0, 1));
 		break;
 	case GLFW_KEY_RIGHT:
-		Rotate(glm::vec3(0, 0, -10.0f * delta_time));
+		ApplyTorqueForce(glm::vec3(0, 0, -1));
 		break;
 	case GLFW_KEY_Q:
-		Rotate(glm::vec3(-5 * delta_time, 0, 0));
+		ApplyTorqueForce(glm::vec3(0, 1, 0));
 		break;
-	case GLFW_KEY_Z:
-		Rotate(glm::vec3(5 * delta_time, 0, 0));
+	case GLFW_KEY_E:
+		ApplyTorqueForce(glm::vec3(0, -1, 0));
 		break;
+	case GLFW_KEY_LEFT_ALT:
+		ApplyForce(glm::vec3(0, 100, 0), glm::vec3(0, 0, 0));
+		break;
+	case GLFW_KEY_RIGHT_SHIFT:
+		ApplyForce(glm::vec3(0, 0, -10), glm::vec3(0, 0, 0));
+		break;
+	case GLFW_KEY_0:
+		PhysicController::GetInstance().Reset(this);
 	}
 }
 
 void AirPlane::Update()
 {
-	speed += acceleration * Time::GetDeltaTime();
-	Transform(glm::vec3(0, 0, -speed * Time::GetDeltaTime()));
+	//ApplyForce(glm::vec3(0, 10, 0), glm::vec3(0, 0, 0));
 }
 
 void AirPlane::accelerate(float value)

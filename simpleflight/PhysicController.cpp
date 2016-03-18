@@ -63,30 +63,59 @@ void PhysicController::Update()
 
 void PhysicController::Add(GameObject* object)
 {
-	btCollisionShape* fallShape = new btBoxShape(btVector3(10, 1.5f, 1));
-	btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 50, 0));
+	btCollisionShape* fallShape = new btBoxShape(btVector3(1, 1, 1));
 	btDefaultMotionState* fallMotionState =
 		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 50, 0)));
-	btScalar mass = 1;
+	btScalar mass = 5;
 	btVector3 fallInertia(0, 0, 0);
 	fallShape->calculateLocalInertia(mass, fallInertia);
 	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
 	btRigidBody* fallRigidBody = new btRigidBody(fallRigidBodyCI);
 	dynamicsWorld->addRigidBody(fallRigidBody);
-
+	fallRigidBody->setGravity(btVector3(0, 0, 0));
 	objects->insert(std::pair<GameObject*, btRigidBody*>(object, fallRigidBody));
 }
 
 void PhysicController::ApplyForce(GameObject* object, glm::vec3 force, glm::vec3 rel_pos)
 {
 	auto rigibody = objects->find(object)->second;
-	btVector3 new_force;
-	btVector3 new_rel_pos;
+	rigibody->setActivationState(1);
+	btVector3 btforce;
+	btVector3 btrel_pos;
 	for (int i = 0; i < 3; i++)
 	{
-		new_force[i] = force[i];
-		new_rel_pos[i] = rel_pos[i];
+		btforce[i] = force[i];
+		btrel_pos[i] = rel_pos[i];
 	}
-	
-	rigibody->applyForce(new_force, new_rel_pos);
+
+	btTransform boxTrans;
+	boxTrans = rigibody->getWorldTransform();
+	btVector3 correctedForce = (boxTrans * btforce) - boxTrans.getOrigin();
+	rigibody->applyCentralForce(correctedForce);
+
+	//rigibody->applyForce(btforce, btrel_pos);
+}
+
+void PhysicController::ApplyTorqueForce(GameObject* object, glm::vec3 torque)
+{
+	auto rigibody = objects->find(object)->second;
+	btVector3 bttorque;
+	for (int i = 0; i < 3; i++)
+		bttorque[i] = torque[i];
+
+
+	btTransform boxTrans;
+	boxTrans = rigibody->getWorldTransform();
+	btVector3 correctedForce = (boxTrans * bttorque) - boxTrans.getOrigin();
+	rigibody->applyTorque(correctedForce);
+}
+
+void PhysicController::Reset(GameObject* object)
+{
+	auto rigibody = objects->find(object)->second;
+	rigibody->clearForces();
+	btTransform transform(btQuaternion(0, 0, 0, 1), btVector3(0, 50, 0));
+	rigibody->setWorldTransform(transform);
+	rigibody->clearForces();
+	rigibody->setActivationState(1);
 }

@@ -2,7 +2,6 @@
 
 Plane::Plane(string path, string directory, Shader* shader, float scale)
 {
-	EventController::AddKeyListener(this);
 	vector<Vertex> vertices;
 	vector<GLuint> indices;
 	vector<Texture> textures;
@@ -39,6 +38,7 @@ Plane::Plane(string path, string directory, Shader* shader, float scale)
 	mesh = new Mesh(vertices, indices, textures);
 	this->shader = shader;
 	Scale(glm::vec3(scale, 1.0f, scale));
+	Transform(glm::vec3(0, -1, 0));
 }
 
 
@@ -54,18 +54,4 @@ void Plane::Draw(glm::mat4 projection, glm::mat4 view)
 	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "model"), 1, GL_FALSE, glm::value_ptr(model_matrix));
 
 	mesh->Draw(*shader);
-}
-
-void Plane::OnKeyHold(int key)
-{
-	OnKey(key);
-}
-
-void Plane::OnKeyPress(int key)
-{
-	OnKey(key);
-}
-
-void Plane::OnKey(int key)
-{
 }

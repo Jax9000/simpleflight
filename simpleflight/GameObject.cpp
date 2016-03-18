@@ -42,6 +42,24 @@ void GameObject::ApplyForce(glm::vec3 force, glm::vec3 rel_pos)
 	PhysicController::GetInstance().ApplyForce(this, force, rel_pos);
 }
 
+void GameObject::ApplyTransformedForce(glm::vec3 force, glm::vec3 rel_pos)
+{
+	auto relative_matrix = glm::translate(model_matrix, rel_pos);
+	for (int i = 0; i < 3; i++)
+	{
+		rel_pos[i] = relative_matrix[3][i];
+		cout << rel_pos[i] << " ";
+	}
+	cout << endl;
+
+	PhysicController::GetInstance().ApplyForce(this, force, rel_pos);
+}
+
+void GameObject::ApplyTorqueForce(glm::vec3 torque)
+{
+	PhysicController::GetInstance().ApplyTorqueForce(this, torque);
+}
+
 void GameObject::Transform(glm::vec3 value)
 {
 	model_matrix = glm::translate(model_matrix, value);
@@ -87,4 +105,18 @@ glm::mat4* GameObject::GetModelMatrix()
 void GameObject::SetModelMatrix(glm::mat4 matrix)
 {
 	model_matrix = matrix;
+}
+
+glm::vec3 GameObject::GetPosition()
+{
+	glm::vec3 position;
+	for (int i = 0; i < 3; i++)
+		position[i] = model_matrix[3][i];
+	return position;
+}
+
+glm::vec3 GameObject::GetRotation()
+{
+	glm::vec3 euler;
+	return euler;
 }
