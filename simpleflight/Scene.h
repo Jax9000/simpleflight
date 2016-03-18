@@ -8,6 +8,7 @@
 
 #include "Camera.h"
 #include "Skybox.h"
+#include "PhysicController.h"
 
 
 class Scene

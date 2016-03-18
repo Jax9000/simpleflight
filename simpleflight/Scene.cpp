@@ -17,6 +17,8 @@ void Scene::Draw(int width, int height)
 	glm::mat4 projection = glm::perspective(camera->Zoom, (float)width / (float)height, 0.1f, 100000.0f);
 	glm::mat4 view = camera->GetViewMatrix();
 
+	PhysicController::GetInstance().Update();
+
 	for (GameObject* object : game_objects)
 	{
 		object->Update();
@@ -25,6 +27,7 @@ void Scene::Draw(int width, int height)
 	for (GameObject* object : game_objects)
 	{
 		object->Draw(projection, view);
+		object->GetModelMatrix();
 	}
 }
 

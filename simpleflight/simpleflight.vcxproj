@@ -49,6 +49,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\JJax\Documents\simpleflight\include\bullet;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -71,6 +72,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AirPlane.cpp" />
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="EventController.cpp" />
     <ClCompile Include="GameController.cpp" />
@@ -80,6 +82,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="PhysicController.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="shader.cpp" />
@@ -95,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirPlane.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="EventController.h" />
     <ClInclude Include="GameController.h" />
@@ -104,6 +108,7 @@
     <ClInclude Include="KeyStatus.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="PhysicController.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Skybox.h" />
@@ -118,6 +123,17 @@
     <None Include="shader.frag" />
     <None Include="skybox.frag" />
     <None Include="skybox.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Desktop\build\src\BulletCollision\BulletCollision.vcxproj">
+      <Project>{3814da3a-68c7-3818-aa4e-808e915c8bd8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Desktop\build\src\BulletDynamics\BulletDynamics.vcxproj">
+      <Project>{8edfb6bf-aa70-3dd0-96e6-0268fe16aaae}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Desktop\build\src\LinearMath\LinearMath.vcxproj">
+      <Project>{72ddb870-9983-354e-8346-5009adf64887}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

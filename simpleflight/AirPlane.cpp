@@ -26,15 +26,15 @@ void AirPlane::OnKey(int key)
 	switch (key)
 	{
 	case GLFW_KEY_UP:
-		if (acceleration < max_acceleration)
-			acceleration += delta_acceleration * delta_time;
+		//if (acceleration < max_acceleration)
+		//	acceleration += delta_acceleration * delta_time;
+		ApplyForce(glm::vec3(0, 0, -75), glm::vec3(0, 0, 0));
 		break;
 	case GLFW_KEY_DOWN:
-		if (acceleration > max_back_acceleration)
-			acceleration -= delta_acceleration * delta_time;
+		ApplyForce(glm::vec3(0, 0, 15), glm::vec3(0, 0, 0));
 		break;
 	case GLFW_KEY_LEFT:
-		Rotate(glm::vec3(0, 0, 10.0f * delta_time));
+		ApplyForce(glm::vec3(0, 10, 0), glm::vec3(5, 0, 0));
 		break;
 	case GLFW_KEY_RIGHT:
 		Rotate(glm::vec3(0, 0, -10.0f * delta_time));

@@ -12,6 +12,7 @@
 #include "Plane.h"
 #include "AirPlane.h"
 #include "WindowController.h"
+#include "PhysicController.h"
 
 #define WIDTH 1400
 #define HEIGHT 800
@@ -56,15 +57,16 @@ int main()
 
 	Shader* shader = new Shader("./model.vs", "./model.frag");
 
-	//Skybox* skybox = new Skybox(skybox_path, skybox_file_extension);
-	//scene.Add(skybox);
+	Skybox* skybox = new Skybox(skybox_path, skybox_file_extension);
+	scene.Add(skybox);
 
 	Plane* plane = new Plane(plane_texture_name, plane_dirpath, shader, 10000);
 	scene.Add(plane);
 
-	//Model* airplane_model = new Model(airplane_path);
-	//GameObject* airplane = new GameObject("Boeing 747", airplane_model, shader);
-	//scene.Add(airplane);
+	Model* airplane_model = new Model(airplane_path);
+	AirPlane* airplane = new AirPlane("Boeing 747", airplane_model, shader);
+	PhysicController::GetInstance().Add(airplane);
+	scene.Add(airplane);
 
 	Model* building_model = new Model(building_path);
 	GameObject* building = new GameObject("Building", building_model, shader);
@@ -73,9 +75,12 @@ int main()
 	building->Scale(glm::vec3(5, 5, 5));
 	scene.Add(building);
 
-	building = new GameObject(*building);
-	building->Transform(glm::vec3(0, -5, 15.0f));
-	scene.Add(building);
+	//building = new GameObject(*building);
+	//building->Transform(glm::vec3(0, -5, 15.0f));
+	//scene.Add(building);
+
+	//Box* box = new Box("box", building_model, shader);
+	//scene.Add(box);
 
 	windowController->Update(scene);
 

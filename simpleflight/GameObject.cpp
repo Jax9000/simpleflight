@@ -37,6 +37,11 @@ void GameObject::Update()
 {
 }
 
+void GameObject::ApplyForce(glm::vec3 force, glm::vec3 rel_pos)
+{
+	PhysicController::GetInstance().ApplyForce(this, force, rel_pos);
+}
+
 void GameObject::Transform(glm::vec3 value)
 {
 	model_matrix = glm::translate(model_matrix, value);
@@ -74,7 +79,12 @@ void GameObject::SetShader(Shader* shader)
 	this->shader = shader;
 }
 
-glm::mat4 GameObject::GetModelMatrix()
+glm::mat4* GameObject::GetModelMatrix()
 {
-	return model_matrix;
+	return &model_matrix;
+}
+
+void GameObject::SetModelMatrix(glm::mat4 matrix)
+{
+	model_matrix = matrix;
 }
