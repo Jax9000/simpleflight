@@ -7,6 +7,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include "Camera.h"
+#include "FollowCamera.h"
 #include "Skybox.h"
 #include "PhysicController.h"
 
@@ -18,9 +19,11 @@ public:
 	~Scene();
 	void Draw(int width, int height);
 	void Add(GameObject* object);
+	void AttachCamera(FollowCamera* camera);
 
 private:
 	std::vector<GameObject*> game_objects;
-	Camera* camera;
+	FollowCamera* camera;
+	//Camera* camera;
 };
 

@@ -33,7 +33,7 @@ class WindowController
 
 	 GLFWwindow* glfw_window;
 	 EventController* event_controller;
-	 int width = 800;
+	 int width = 1200;
 	 int height = 800;
 };
 

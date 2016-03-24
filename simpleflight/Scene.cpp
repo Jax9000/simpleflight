@@ -4,7 +4,6 @@
 
 Scene::Scene()
 {
-	camera = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
 }
 
 
@@ -14,15 +13,15 @@ Scene::~Scene()
 
 void Scene::Draw(int width, int height)
 {
-	glm::mat4 projection = glm::perspective(camera->Zoom, (float)width / (float)height, 0.1f, 100000.0f);
-	glm::mat4 view = camera->GetViewMatrix();
-
 	PhysicController::GetInstance().Update();
 
 	for (GameObject* object : game_objects)
 	{
 		object->Update();
 	}
+
+	glm::mat4 projection = glm::perspective(45.0f, (float)width / (float)height, 0.1f, 100000.0f);
+	glm::mat4 view = camera->GetViewMatrix();
 
 	for (GameObject* object : game_objects)
 	{
@@ -34,4 +33,9 @@ void Scene::Draw(int width, int height)
 void Scene::Add(GameObject* object)
 {
 	game_objects.push_back(object);
+}
+
+void Scene::AttachCamera(FollowCamera* camera)
+{
+	this->camera = camera;
 }

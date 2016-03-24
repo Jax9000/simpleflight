@@ -13,6 +13,7 @@
 #include "AirPlane.h"
 #include "WindowController.h"
 #include "PhysicController.h"
+#include "FollowCamera.h"
 
 #define WIDTH 1400
 #define HEIGHT 800
@@ -48,8 +49,8 @@ int main()
 	WindowController* windowController = &WindowController::GetInstance();
 	if (windowController == nullptr)
 		return Terminate("Failed to create window...");
-	windowController->setHeight(800);
-	windowController->setWidth(1200);
+	//windowController->setHeight(800);
+	//windowController->setWidth(1200);
 
 	GlewInit();
 
@@ -62,13 +63,15 @@ int main()
 
 	Plane* plane = new Plane(plane_texture_name, plane_dirpath, shader, 10000);
 	scene.Add(plane);
-
+	Model* building_model = new Model(building_path);
 	Model* airplane_model = new Model(airplane_path);
 	AirPlane* airplane = new AirPlane("Boeing 747", airplane_model, shader);
 	PhysicController::GetInstance().Add(airplane);
 	scene.Add(airplane);
 
-	Model* building_model = new Model(building_path);
+	FollowCamera* camera = new FollowCamera(airplane);
+	scene.AttachCamera(camera);
+
 	GameObject* building = new GameObject("Building", building_model, shader);
 	building->Rotate(glm::vec3(0, 0, 90.0f));
 	building->Transform(glm::vec3(11.8f * 5, 250, 0));

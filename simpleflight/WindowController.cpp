@@ -49,7 +49,8 @@ void WindowController::init()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	glfw_window = glfwCreateWindow(800, 800, "Simple Flight Simulator", nullptr, nullptr);
+	glfw_window = glfwCreateWindow(1200, 800, "Simple Flight Simulator", nullptr, nullptr);
+	glfwSetWindowSize(glfw_window, 1200, 800);
 
 	if (glfw_window == nullptr)
 	{
