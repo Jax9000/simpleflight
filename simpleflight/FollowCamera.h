@@ -18,7 +18,7 @@ private:
 	GameObject* following_object;
 	glm::mat4 view_matrix;
 
-	float zpos = -120;
+	float zpos = 120;
 	float ypos = 22;
 };
 
