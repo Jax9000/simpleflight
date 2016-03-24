@@ -1,4 +1,5 @@
 #pragma once
+#include <iomanip>
 #include "Model.h"
 #include "shader.h"
 #include "PhysicController.h"
@@ -24,6 +25,7 @@ public:
 	void Transform(glm::vec3 value);
 	void Scale(glm::vec3 value);
 	void Rotate(glm::vec3 value);
+	void PrintModelMatrix();
 
 #pragma region getters and setters
 	string GetName();
@@ -33,7 +35,7 @@ public:
 	void SetShader(Shader* shader);
 
 	glm::mat4* GetModelMatrix();
-	void SetModelMatrix(glm::mat4 matrix);
+	virtual void SetModelMatrix(glm::mat4 matrix);
 
 	int GetMass() const { return mass; }
 	void SetMass(int val) { mass = val; }

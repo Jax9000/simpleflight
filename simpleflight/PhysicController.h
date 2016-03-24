@@ -19,6 +19,7 @@ public:
 	void Update();
 	void Add(GameObject* object);
 	void ApplyForce(GameObject* object, glm::vec3 force, glm::vec3 rel_pos);
+	void ApplySimpleForce(GameObject* object, glm::vec3 force, glm::vec3 rel_pos);
 	void ApplyTorqueForce(GameObject* object, glm::vec3 torque);
 	void Reset(GameObject* object);
 

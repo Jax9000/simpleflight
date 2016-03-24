@@ -15,11 +15,11 @@ PhysicController::PhysicController()
 	dynamicsWorld->setGravity(btVector3(0, -10, 0));
 
 
-	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
+	//btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
+	btCollisionShape* groundShape = new btBoxShape(btVector3(100000, 1, 100000));
 
 	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
-	btRigidBody::btRigidBodyConstructionInfo
-		groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+	btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
 	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 	dynamicsWorld->addRigidBody(groundRigidBody);
 
@@ -63,16 +63,22 @@ void PhysicController::Update()
 
 void PhysicController::Add(GameObject* object)
 {
-	btCollisionShape* fallShape = new btBoxShape(btVector3(1, 1, 1));
+	btCollisionShape* fallShape = new btBoxShape(btVector3(10, 1, 50));
+	glm::vec3 position = object->GetPosition();
+	btVector3 btposition;
+	for (int i = 0; i < 3; i++)
+	{
+		btposition[i] = position[i];
+	}
 	btDefaultMotionState* fallMotionState =
-		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 50, 0)));
+		new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
 	btScalar mass = 5;
 	btVector3 fallInertia(0, 0, 0);
 	fallShape->calculateLocalInertia(mass, fallInertia);
 	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
 	btRigidBody* fallRigidBody = new btRigidBody(fallRigidBodyCI);
 	dynamicsWorld->addRigidBody(fallRigidBody);
-	fallRigidBody->setGravity(btVector3(0, 0, 0));
+
 	objects->insert(std::pair<GameObject*, btRigidBody*>(object, fallRigidBody));
 }
 
@@ -94,6 +100,20 @@ void PhysicController::ApplyForce(GameObject* object, glm::vec3 force, glm::vec3
 	rigibody->applyCentralForce(correctedForce);
 
 	//rigibody->applyForce(btforce, btrel_pos);
+}
+
+void PhysicController::ApplySimpleForce(GameObject* object, glm::vec3 force, glm::vec3 rel_pos)
+{
+	auto rigibody = objects->find(object)->second;
+	rigibody->setActivationState(1);
+	btVector3 btforce;
+	btVector3 btrel_pos;
+	for (int i = 0; i < 3; i++)
+	{
+		btforce[i] = force[i];
+		btrel_pos[i] = rel_pos[i];
+	}
+	rigibody->applyForce(btforce, btrel_pos);
 }
 
 void PhysicController::ApplyTorqueForce(GameObject* object, glm::vec3 torque)

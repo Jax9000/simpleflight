@@ -26,31 +26,34 @@ void AirPlane::OnKey(int key)
 	switch (key)
 	{
 	case GLFW_KEY_UP:
-		ApplyTorqueForce(glm::vec3(-1, 0, 0));
+		ApplyTorqueForce(glm::vec3(-400, 0, 0));
 		break;
 	case GLFW_KEY_DOWN:
-		ApplyTorqueForce(glm::vec3(1, 0, 0));
+		ApplyTorqueForce(glm::vec3(400, 0, 0));
 		break;
 	case GLFW_KEY_LEFT:
-		ApplyTorqueForce(glm::vec3(0, 0, 1));
+		ApplyTorqueForce(glm::vec3(0, 0, 50));
 		break;
 	case GLFW_KEY_RIGHT:
-		ApplyTorqueForce(glm::vec3(0, 0, -1));
+		ApplyTorqueForce(glm::vec3(0, 0, -50));
 		break;
 	case GLFW_KEY_Q:
-		ApplyTorqueForce(glm::vec3(0, 1, 0));
+		ApplyTorqueForce(glm::vec3(0, 100, 0));
 		break;
 	case GLFW_KEY_E:
-		ApplyTorqueForce(glm::vec3(0, -1, 0));
+		ApplyTorqueForce(glm::vec3(0, -100, 0));
 		break;
 	case GLFW_KEY_LEFT_ALT:
-		ApplyForce(glm::vec3(0, 100, 0), glm::vec3(0, 0, 0));
+		ApplyTransformedForce(glm::vec3(0, 100, 0), glm::vec3(0, 0, 0));
 		break;
 	case GLFW_KEY_RIGHT_SHIFT:
 		ApplyForce(glm::vec3(0, 0, -10), glm::vec3(0, 0, 0));
 		break;
 	case GLFW_KEY_0:
 		PhysicController::GetInstance().Reset(this);
+		break;
+	case GLFW_KEY_RIGHT_ALT:
+		ApplyTransformedForce(glm::vec3(0, 1000, 0), glm::vec3(0, 0, 0));
 	}
 }
 
@@ -67,4 +70,10 @@ void AirPlane::accelerate(float value)
 		speed = max_back_speed;
 	else
 		speed += value;
+}
+
+void AirPlane::SetModelMatrix(glm::mat4 matrix)
+{
+	model_matrix = matrix;
+	//model_matrix[3][1] -= 10; //to show model plane properly (box shape collider sets bad Y position)
 }

@@ -14,9 +14,12 @@ public:
 	virtual void OnKeyHold(int key) override;
 	void OnKey(int key);
 	virtual void Update() override;
+	virtual void SetModelMatrix(glm::mat4 matrix) override;
 
 private:
 	void accelerate(float value);
+
+
 
 	float max_speed = 1000;
 	float max_back_speed = -100;
