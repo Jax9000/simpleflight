@@ -30,6 +30,8 @@ void GameObject::Draw(glm::mat4 projection, glm::mat4 view)
 	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 	glUniformMatrix4fv(glGetUniformLocation(shader->Program, "model"), 1, GL_FALSE, glm::value_ptr(model_matrix));
+	GLint lightPosLoc = glGetUniformLocation(shader->Program, "lightPos");
+	glUniform3f(lightPosLoc, Light::position.x, Light::position.y, Light::position.z);
 	model->Draw(*shader);
 }
 

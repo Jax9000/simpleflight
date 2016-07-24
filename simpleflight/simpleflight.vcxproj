@@ -80,6 +80,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="IKeyListener.cpp" />
     <ClCompile Include="IMouseListener.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="IKeyListener.h" />
     <ClInclude Include="IMouseListener.h" />
     <ClInclude Include="KeyStatus.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="PhysicController.h" />

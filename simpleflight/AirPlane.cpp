@@ -65,13 +65,10 @@ void AirPlane::OnKey(int key)
 
 void AirPlane::Update()
 {
-	//ApplyForce(glm::vec3(0, 10, 0), glm::vec3(0, 0, 0));
 	glm::vec3 velocity = PhysicController::GetInstance().GetVelocity(this);
-	//cout << velocity[0] <<  " " << velocity[1] << " " << velocity[2] <<endl;
 }
 
 void AirPlane::SetModelMatrix(glm::mat4 matrix)
 {
 	model_matrix = matrix;
-	//model_matrix[3][1] -= 10; //to show model plane properly (box shape collider sets bad Y position)
 }

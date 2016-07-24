@@ -58,6 +58,9 @@ int main()
 
 	Shader* shader = new Shader("./model.vs", "./model.frag");
 
+	Light light = Light::getInstance();
+	Light::position = glm::vec3(5, 50, 5);
+
 	Skybox* skybox = new Skybox(skybox_path, skybox_file_extension);
 	scene.Add(skybox);
 

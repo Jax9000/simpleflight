@@ -62,10 +62,10 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
 			vector.z = mesh->mVertices[i].z;
 			vertex.Position = vector;
 			// Normals
-			//vector.x = mesh->mNormals[i].x;
-			//vector.y = mesh->mNormals[i].y;
-			//vector.z = mesh->mNormals[i].z;
-			//vertex.Normal = vector;
+			vector.x = mesh->mNormals[i].x;
+			vector.y = mesh->mNormals[i].y;
+			vector.z = mesh->mNormals[i].z;
+			vertex.Normal = vector;
 			// Texture Coordinates
 			if (mesh->mTextureCoords[0]) // Does the mesh contain texture coordinates?
 			{
