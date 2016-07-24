@@ -14,8 +14,6 @@ PhysicController::PhysicController()
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 	dynamicsWorld->setGravity(btVector3(0, -10, 0));
 
-
-	//btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
 	btCollisionShape* groundShape = new btBoxShape(btVector3(100000, 1, 100000));
 
 	btDefaultMotionState* groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
@@ -23,15 +21,6 @@ PhysicController::PhysicController()
 	btRigidBody* groundRigidBody = new btRigidBody(groundRigidBodyCI);
 	dynamicsWorld->addRigidBody(groundRigidBody);
 
-
-	//btDefaultMotionState* fallMotionState =
-	//	new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 50, 0)));
-	//btScalar mass = 1;
-	//btVector3 fallInertia(0, 0, 0);
-	//fallShape->calculateLocalInertia(mass, fallInertia);
-	//btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
-	//btRigidBody* fallRigidBody = new btRigidBody(fallRigidBodyCI);
-	//dynamicsWorld->addRigidBody(fallRigidBody);
 }
 
 PhysicController& PhysicController::GetInstance()
@@ -77,8 +66,12 @@ void PhysicController::Add(GameObject* object)
 	fallShape->calculateLocalInertia(mass, fallInertia);
 	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
 	btRigidBody* fallRigidBody = new btRigidBody(fallRigidBodyCI);
-	dynamicsWorld->addRigidBody(fallRigidBody);
 
+	float wheelRadius = 2.f;
+	float wheelWidth = .9f;
+	auto m_wheelShape = new btCylinderShapeX(btVector3(wheelWidth, wheelRadius, wheelRadius));
+
+	dynamicsWorld->addRigidBody(fallRigidBody);
 	objects->insert(std::pair<GameObject*, btRigidBody*>(object, fallRigidBody));
 }
 
@@ -138,4 +131,12 @@ void PhysicController::Reset(GameObject* object)
 	rigibody->setWorldTransform(transform);
 	rigibody->clearForces();
 	rigibody->setActivationState(1);
+}
+
+glm::vec3 PhysicController::GetVelocity(GameObject* object)
+{
+	auto rigibody = objects->find(object)->second;
+	btVector3 btVelocity = rigibody->getLinearVelocity();
+	glm::vec3 velocity(btVelocity[0], btVelocity[1], btVelocity[2]);
+	return velocity;
 }

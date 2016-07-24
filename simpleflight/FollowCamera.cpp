@@ -51,7 +51,7 @@ void FollowCamera::OnKeyPress(int key)
 	if (key == GLFW_KEY_4)
 		zpos--;
 	//cout << "y: " << ypos << "z: " << zpos << endl;
-	following_object->PrintModelMatrix();
+	//following_object->PrintModelMatrix();
 }
 
 void FollowCamera::OnMouseMoved(double xoffset, double yoffset)

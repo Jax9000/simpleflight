@@ -43,6 +43,12 @@ void AirPlane::OnKey(int key)
 	case GLFW_KEY_E:
 		ApplyTorqueForce(glm::vec3(0, -100, 0));
 		break;
+	case GLFW_KEY_W:
+		ApplyForce(glm::vec3(0, 0, -100), glm::vec3(0, 0, 0));
+		break;
+	case GLFW_KEY_S:
+		ApplyForce(glm::vec3(0, 0, 100), glm::vec3(0, 0, 0));
+		break;
 	case GLFW_KEY_LEFT_ALT:
 		ApplyTransformedForce(glm::vec3(0, 100, 0), glm::vec3(0, 0, 0));
 		break;
@@ -60,16 +66,8 @@ void AirPlane::OnKey(int key)
 void AirPlane::Update()
 {
 	//ApplyForce(glm::vec3(0, 10, 0), glm::vec3(0, 0, 0));
-}
-
-void AirPlane::accelerate(float value)
-{
-	if (speed + value > max_speed)
-		speed = max_speed;
-	else if (speed + value < max_back_speed)
-		speed = max_back_speed;
-	else
-		speed += value;
+	glm::vec3 velocity = PhysicController::GetInstance().GetVelocity(this);
+	//cout << velocity[0] <<  " " << velocity[1] << " " << velocity[2] <<endl;
 }
 
 void AirPlane::SetModelMatrix(glm::mat4 matrix)

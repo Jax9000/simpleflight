@@ -17,16 +17,6 @@ public:
 	virtual void SetModelMatrix(glm::mat4 matrix) override;
 
 private:
-	void accelerate(float value);
 
-
-
-	float max_speed = 1000;
-	float max_back_speed = -100;
-	float speed = 0;
-	float max_acceleration = 50;
-	float acceleration = 0;
-	float delta_acceleration = 1;
-	float max_back_acceleration = -1;
 };
 

@@ -72,9 +72,9 @@ void GameObject::Rotate(glm::vec3 value)
 
 void GameObject::PrintModelMatrix()
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < 4; j++)
 		{
 			cout << fixed << setprecision(2);
 			cout << model_matrix[i][j] << " ";
